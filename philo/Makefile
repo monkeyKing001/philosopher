@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/09/01 15:55:24 by dokwak           ###   ########.fr        #
+#    Updated: 2022/09/04 21:31:13 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ BIN_DIR = .
 BIN = philo
 NAME = $(BIN_DIR)/$(BIN)
 
-SRC = main.c ft_atoi.c utils.c
+SRC = main.c ft_atoi.c utils.c ft_strjoin.c ft_strlcat.c ft_strlen.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
@@ -89,7 +89,7 @@ run: all
 	@$(LEAKS)./$(NAME) 10 20 30 40 50
 
 clean:
-	@$(PRINTF) "$(CYAN)Cleaning up object files in $(BIN)...$(DEFAULT)\n"
+	@$(PRINTF) "$(CYAN)Cleaning up object files in $(OBJ_DIR)...$(DEFAULT)\n"
 #	@if [ -d "libft" ]; then \
 #		make clean -C libft/; \
 	fi
