@@ -1,0 +1,78 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AR	Makefile	/^AR = ar rcs$/;"	m
+BIN	Makefile	/^BIN = philo$/;"	m
+BIN_DIR	Makefile	/^BIN_DIR = .$/;"	m
+BLUE	Makefile	/^BLUE = \\033[0;94m$/;"	m
+BLUE	inc/philo.h	/^# define BLUE /;"	d
+CC	Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -Wall -Wextra -Werror -MD -g3 $/;"	m
+CYAN	Makefile	/^CYAN = \\033[0;96m$/;"	m
+CYAN	inc/philo.h	/^# define CYAN /;"	d
+DEFAULT	Makefile	/^DEFAULT = \\033[0;39m$/;"	m
+DEFAULT	inc/philo.h	/^# define DEFAULT /;"	d
+DIE	inc/philo.h	/^# define DIE /;"	d
+EATING	inc/philo.h	/^# define EATING /;"	d
+FALSE	inc/philo.h	/^# define FALSE /;"	d
+GRAY	Makefile	/^GRAY = \\033[0;90m$/;"	m
+GRAY	inc/philo.h	/^# define GRAY /;"	d
+GREEN	Makefile	/^GREEN = \\033[0;92m$/;"	m
+GREEN	inc/philo.h	/^# define GREEN /;"	d
+MAGENTA	Makefile	/^MAGENTA = \\033[0;95m$/;"	m
+MAGENTA	inc/philo.h	/^# define MAGENTA /;"	d
+NAME	Makefile	/^NAME = $(BIN_DIR)\/$(BIN)$/;"	m
+OBJ	Makefile	/^OBJ = $(addprefix $(OBJ_DIR)\/, $(SRC:.c=.o))$/;"	m
+OBJ_DIR	Makefile	/^OBJ_DIR = obj$/;"	m
+PHILO_H	inc/philo.h	/^# define PHILO_H$/;"	d
+PRINTF	Makefile	/^PRINTF = LC_NUMERIC="en_US.UTF-8" printf$/;"	m
+RED	Makefile	/^RED = \\033[0;91m$/;"	m
+RED	inc/philo.h	/^# define RED /;"	d
+RM	Makefile	/^RM = rm -f$/;"	m
+SHELL	Makefile	/^SHELL=\/bin\/bash$/;"	m
+SLEEPING	inc/philo.h	/^# define SLEEPING /;"	d
+SRC	Makefile	/^SRC = main.c ft_atoi.c utils.c ft_strjoin.c ft_strlcat.c ft_strlen.c philosopher.c$/;"	m
+SRC_COUNT	Makefile	/^SRC_COUNT := 0$/;"	m
+SRC_COUNT_TOT	Makefile	/^	SRC_COUNT_TOT := $(shell echo -n $(SRC) | wc -w)$/;"	m
+SRC_COUNT_TOT	Makefile	/^SRC_COUNT_TOT := $(shell expr $(shell echo -n $(SRC) | wc -w) - $(shell ls -l $(OBJ_DIR) 2>&1 | grep ".o" | wc -l) + 1)$/;"	m
+SRC_DIR	Makefile	/^SRC_DIR = src$/;"	m
+SRC_PCT	Makefile	/^SRC_PCT = $(shell expr 100 \\* $(SRC_COUNT) \/ $(SRC_COUNT_TOT))$/;"	m
+THINKING	inc/philo.h	/^# define THINKING /;"	d
+TRUE	inc/philo.h	/^# define TRUE /;"	d
+UNAME	Makefile	/^UNAME = $(shell uname -s)$/;"	m
+WHITE	Makefile	/^WHITE = \\033[0;97m$/;"	m
+WHITE	inc/philo.h	/^# define WHITE /;"	d
+YELLOW	Makefile	/^YELLOW = \\033[0;93m$/;"	m
+YELLOW	inc/philo.h	/^# define YELLOW /;"	d
+forks	inc/philo.h	/^	pthread_mutex_t		*forks;$/;"	m	struct:s_desk
+ft_atoi	src/ft_atoi.c	/^int	ft_atoi(const char *s)$/;"	f
+ft_isdigit	src/ft_atoi.c	/^int	ft_isdigit(const char s)$/;"	f
+ft_issign	src/ft_atoi.c	/^int	ft_issign(const char *s, int *sig)$/;"	f
+ft_isspace	src/ft_atoi.c	/^int	ft_isspace(const char *s)$/;"	f
+ft_strjoin	src/ft_strjoin.c	/^char	*ft_strjoin(char const *s1, char const *s2)$/;"	f
+ft_strlcat	src/ft_strlcat.c	/^size_t	ft_strlcat(char *dest, const char *src, size_t dstsize)$/;"	f
+ft_strlen	src/ft_strlen.c	/^size_t	ft_strlen(char *str)$/;"	f
+get_time_interval	src/utils.c	/^long long	get_time_interval(long long start, long long end)$/;"	f
+get_time_ms	src/utils.c	/^long long	get_time_ms(void)$/;"	f
+hello_philosophers	src/philosopher.c	/^void	hello_philosophers(t_desk *desk)$/;"	f
+init_desk	src/main.c	/^t_desk	*init_desk(int argc, const char **argv)$/;"	f
+init_phils	src/main.c	/^t_philosopher	*init_phils(t_desk *desk)$/;"	f
+last_time	inc/philo.h	/^	unsigned long long	last_time;$/;"	m	struct:s_philosopher
+left_fork	inc/philo.h	/^	pthread_mutex_t		*left_fork;$/;"	m	struct:s_philosopher
+main	src/main.c	/^int	main(int argc, char **argv)$/;"	f
+number_of_must_eat	inc/philo.h	/^	int					number_of_must_eat;$/;"	m	struct:s_desk
+philosophers_action	src/philosopher.c	/^void	*philosophers_action(void *v_desk)$/;"	f
+phils	inc/philo.h	/^	t_philosopher		*phils;$/;"	m	struct:s_desk
+phils_num	inc/philo.h	/^	int					phils_num;$/;"	m	struct:s_desk
+right_fork	inc/philo.h	/^	pthread_mutex_t		*right_fork;$/;"	m	struct:s_philosopher
+s_desk	inc/philo.h	/^typedef struct s_desk$/;"	s
+s_philosopher	inc/philo.h	/^typedef struct s_philosopher$/;"	s
+status	inc/philo.h	/^	char				status;$/;"	m	struct:s_philosopher
+t_desk	inc/philo.h	/^}	t_desk;$/;"	t	typeref:struct:s_desk
+t_philosopher	inc/philo.h	/^}	t_philosopher;$/;"	t	typeref:struct:s_philosopher
+time_to_die	inc/philo.h	/^	unsigned long long	time_to_die;$/;"	m	struct:s_desk
+time_to_eat	inc/philo.h	/^	unsigned long long	time_to_eat;$/;"	m	struct:s_desk
+time_to_sleep	inc/philo.h	/^	unsigned long long	time_to_sleep;$/;"	m	struct:s_desk

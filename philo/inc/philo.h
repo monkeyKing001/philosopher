@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/04 21:46:44 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/14 19:12:12 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ typedef struct s_philosopher
 {
 	char				status;
 	unsigned long long	last_time;
+	int					phils_id;
+	int					num_eat;
+	pthread_mutex_t		*left_fork;
+	pthread_mutex_t		*right_fork;
+	long long			time_to_die;
+	long long			time_to_eat;
+	long long			time_to_sleep;
 }	t_philosopher;
 
 /*
@@ -69,10 +76,12 @@ typedef struct s_desk
 {
 	t_philosopher		*phils;
 	pthread_mutex_t		*forks;
+	pthread_mutex_t		*info_mutex;
 	int					phils_num;
-	unsigned long long	time_to_die;
-	unsigned long long	time_to_eat;
-	unsigned long long	time_to_sleep;
+	int					phils_idx;
+	long long			time_to_die;
+	long long			time_to_eat;
+	long long			time_to_sleep;
 	int					number_of_must_eat;
 }	t_desk;
 
@@ -80,19 +89,16 @@ typedef struct s_desk
 /*****   main.c   ******/
 /***********************/
 t_desk			*init_desk(int argc, const char **argv);
-t_philosopher	*init_phils(int phils_num);
+t_philosopher	*init_phils(t_desk *desk);
 int				init_argv(t_desk *desk, int arc, const char **argv);
 void			report_status(int phil, int status);
-void			hello_philosophers(t_desk *desk);
-void			bye_philosophers(t_desk *desk);
 
 /***********************/
 /*****   utils.c   *****/
 /***********************/
 long long		get_time_ms(void);
-long long		get_time_interval(\
-		long long start, \
-		long long end);
+long long		get_time_interval(long long start, long long end);
+long long		get_timestamp(t_philosopher *phil);
 
 /***********************/
 /*****    ft_*.c   *****/
@@ -100,4 +106,17 @@ long long		get_time_interval(\
 int				ft_atoi(const char *s);
 size_t			ft_strlcat(char *dest, const char *src, size_t dstsize);
 size_t			ft_strlen(char *str);
+
+/***********************/
+/**   philosopher.c  ***/
+/***********************/
+void			hello_philosophers(t_desk *desk);
+void			bye_philosophers(t_desk *desk);
+void			*philosophers_action(void *_NULLABLE);
+
+/***********************/
+/*****   action.c  *****/
+/***********************/
+int				eating(t_philosopher *phil);
+int				thinking(t_philosopher *phil);
 #endif

@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/09/04 21:31:13 by dokwak           ###   ########.fr        #
+#    Updated: 2022/09/14 19:09:17 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,16 @@ UNAME = $(shell uname -s)
 ##ifeq ($(UNAME), Linux)
 ##	LEAKS = valgrind --leak-check=full --track-fds=yes --trace-children=yes -s -q 
 ##endif
+
 # Mac Valgrind 
-ifeq ($(UNAME), Darwin)
-	LEAKS = valgrind --leak-check=full --track-fds=yes --trace-children=yes -s -q 
-endif
+#ifeq ($(UNAME), Darwin)
+#	LEAKS = valgrind --leak-check=full --track-fds=yes --trace-children=yes -s -q 
+#endif
+
+# Mac Valgrind 
+#ifeq ($(UNAME), Darwin)
+#	LEAKS = valgrind --leak-check=full
+#endif
 
 AR = ar rcs
 CFLAGS = -Wall -Wextra -Werror -MD -g3 
@@ -45,7 +51,7 @@ BIN_DIR = .
 BIN = philo
 NAME = $(BIN_DIR)/$(BIN)
 
-SRC = main.c ft_atoi.c utils.c ft_strjoin.c ft_strlcat.c ft_strlen.c
+SRC = main.c ft_atoi.c utils.c ft_strjoin.c ft_strlcat.c ft_strlen.c philosopher.c action.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
@@ -77,6 +83,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(PRINTF) "\r%100s\r[ %d/%d (%d%%) ] Compiling $(BLUE)$<$(DEFAULT)..." "" $(SRC_COUNT) $(SRC_COUNT_TOT) $(SRC_PCT)
 	@$(CC) $(CFLAGS) $(CDEBUG) -c $< -o $@
 
+#@$(PRINTF) "\r%100s\r[ %d/%d (%d%%) ] Compiling $(BLUE)$<$(DEFAULT)..." "" $(SRC_COUNT) $(SRC_COUNT_TOT) $(SRC_PCT)
 # libft make
 #compile_libft:
 #	@make -C libft bonus
@@ -86,7 +93,7 @@ create_dirs:
 	@mkdir -p $(BIN_DIR)
 
 run: all
-	@$(LEAKS)./$(NAME) 10 20 30 40 50
+	@$(LEAKS)./$(NAME) 5 40 10 10 5
 
 clean:
 	@$(PRINTF) "$(CYAN)Cleaning up object files in $(OBJ_DIR)...$(DEFAULT)\n"

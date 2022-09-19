@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:58:43 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/04 20:28:43 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/08 15:25:46 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,13 @@ long long	get_time_ms(void)
 long long	get_time_interval(long long start, long long end)
 {
 	return (end - start);
+}
+
+long long	get_timestamp(t_philosopher *phil)
+{
+	long long	timestamp;
+
+	timestamp = phil -> last_time - get_time_ms();
+	phil -> last_time = get_time_ms();
+	return (timestamp);
 }
