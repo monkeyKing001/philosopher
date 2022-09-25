@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/14 19:12:12 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:46:40 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@
 typedef struct s_philosopher
 {
 	char				status;
-	unsigned long long	last_time;
+	long long			birth_ms;
+	long long			last_time;
 	int					phils_id;
 	int					num_eat;
 	pthread_mutex_t		*left_fork;
@@ -119,4 +120,5 @@ void			*philosophers_action(void *_NULLABLE);
 /***********************/
 int				eating(t_philosopher *phil);
 int				thinking(t_philosopher *phil);
+int				sleeping(t_philosopher *phil);
 #endif

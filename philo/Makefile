@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/09/14 19:09:17 by dokwak           ###   ########.fr        #
+#    Updated: 2022/09/19 10:11:54 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,8 +92,13 @@ create_dirs:
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(BIN_DIR)
 
+ # argv[1] = number_of_philosophers 
+ # argv[2] = time_to_die 
+ # argv[3] = time_to_eat 
+ # argv[4] = time_to_sleep 
+ # argv[5] = [number_of_times_each_philosopher_must_eat] <- an optional arg
 run: all
-	@$(LEAKS)./$(NAME) 5 40 10 10 5
+	@$(LEAKS)./$(NAME) 5 400 100 100 5
 
 clean:
 	@$(PRINTF) "$(CYAN)Cleaning up object files in $(OBJ_DIR)...$(DEFAULT)\n"

@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:09:14 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/08 16:02:28 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:46:31 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -74,6 +74,7 @@ t_philosopher	*init_phils(t_desk *desk)
 	i = 0;
 	while (i < phils_num)
 	{
+		phils[i].birth_ms = birth_ms;
 		phils[i].left_fork = &desk -> forks[i % phils_num];
 		phils[i].right_fork = &desk -> forks[(i + 1) % phils_num];
 		phils[i].status = SLEEPING;

@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/14 19:10:30 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:38:07 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -66,5 +66,7 @@ void	*philosophers_action(void *v_desk)
 	phil_idx = desk -> phils_idx;
 	pthread_mutex_unlock(desk -> info_mutex);
 	eating(&(desk -> phils[phil_idx]));
+	sleeping(&(desk -> phils[phil_idx]));
+	thinking(&(desk -> phils[phil_idx]));
 	return (NULL);
 }
