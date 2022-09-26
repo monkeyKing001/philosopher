@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:09:14 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/19 09:46:31 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/26 10:13:34 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -48,6 +48,7 @@ t_desk	*init_desk(int argc, const char **argv)
 	desk -> time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		desk -> number_of_must_eat = ft_atoi(argv[5]);
+	desk -> finished = FALSE;
 	desk -> forks = malloc(sizeof(pthread_mutex_t) * desk -> phils_num);
 	desk -> info_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!desk -> forks || ! desk -> info_mutex)

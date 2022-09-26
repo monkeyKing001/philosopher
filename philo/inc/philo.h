@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/19 09:46:40 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/26 14:31:12 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 /***********************/
 # define FALSE 0
 # define TRUE 1
+# define FAIL 0
+# define SUCCESS 1
 
 /***********************/
 /******  COLORS   ******/
@@ -84,6 +86,7 @@ typedef struct s_desk
 	long long			time_to_eat;
 	long long			time_to_sleep;
 	int					number_of_must_eat;
+	int					finished;
 }	t_desk;
 
 /***********************/
@@ -114,11 +117,16 @@ size_t			ft_strlen(char *str);
 void			hello_philosophers(t_desk *desk);
 void			bye_philosophers(t_desk *desk);
 void			*philosophers_action(void *_NULLABLE);
+int				philosophers_action_2(t_desk *desk, int phil_idx);
 
 /***********************/
 /*****   action.c  *****/
 /***********************/
-int				eating(t_philosopher *phil);
-int				thinking(t_philosopher *phil);
-int				sleeping(t_philosopher *phil);
+//int				eating(t_philosopher *phil);
+//int				thinking(t_philosopher *phil);
+//int				sleeping(t_philosopher *phil);
+int				eating(t_desk *desk, int phil_idx);
+int				thinking(t_desk *desk, int phil_idx);
+int				sleeping(t_desk *desk, int phil_idx);
+int 			check_die(t_desk *desk, int phil_idx);
 #endif

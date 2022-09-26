@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/09/19 10:11:54 by dokwak           ###   ########.fr        #
+#    Updated: 2022/09/26 16:25:38 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ CC = gcc
 PRINTF = LC_NUMERIC="en_US.UTF-8" printf
 SRC_DIR = src
 OBJ_DIR = obj
-BIN_DIR = .
+BIN_DIR = ./
 #LIBFT = libft/libft.a
 BIN = philo
 NAME = $(BIN_DIR)/$(BIN)
@@ -108,7 +108,8 @@ clean:
 	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	@$(RM) -r $(BIN_DIR)
+	@$(RM) $(BIN)
+	@$(RM) -r $(OBJ_DIR)
 	@$(PRINTF) "$(CYAN)Removed $(BIN)$(DEFAULT)\n"
 
 re: fclean

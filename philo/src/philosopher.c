@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/19 09:38:07 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/26 15:18:00 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -29,8 +29,6 @@
  * 1 3 5 0 2 4
  * 0 
  */
-//		pthread_create(&threads[i % offset], NULL, 
-//			philosophers_action_2, (void *)(&desk -> phils[i % offset]));
 void	hello_philosophers(t_desk *desk)
 {
 	int				i;
@@ -65,8 +63,20 @@ void	*philosophers_action(void *v_desk)
 	desk = v_desk;
 	phil_idx = desk -> phils_idx;
 	pthread_mutex_unlock(desk -> info_mutex);
-	eating(&(desk -> phils[phil_idx]));
-	sleeping(&(desk -> phils[phil_idx]));
-	thinking(&(desk -> phils[phil_idx]));
+	philosophers_action_2(desk, phil_idx);
 	return (NULL);
+}
+
+int	philosophers_action_2(t_desk *desk, int phil_idx)
+{
+	while (desk -> finished == FALSE)
+	{
+		if (desk -> finished == FALSE && eating(desk, phil_idx) == FAIL) 
+			desk -> finished = TRUE;
+		if (desk -> finished == FALSE && sleeping(desk, phil_idx) == FAIL) 
+			desk -> finished = TRUE;
+		if  (desk -> finished == FALSE && thinking(desk, phil_idx) == FAIL) 
+			desk -> finished = TRUE;
+	}
+	return (1);
 }
