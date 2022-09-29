@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 19:09:31 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/28 22:14:19 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/29 19:46:33 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -89,7 +89,7 @@ int	check_die(t_desk *desk, int phil_idx)
 			< \
 			get_time_interval(phil -> last_time, get_time_ms()))
 	{
-		phil -> status = DIE;
+		phil -> status = FINISHED;
 		desk -> finished = TRUE;
 		printf("%lld %d died\n", \
 				get_time_interval(phil -> birth_ms, \
