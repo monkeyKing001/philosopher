@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/29 19:54:21 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/29 21:24:05 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_philosopher
 	long long			last_time;
 	int					phils_id;
 	int					num_eat;
+	int					max_eat_num;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	long long			time_to_die;
@@ -103,6 +104,7 @@ void			report_status(int phil, int status);
 long long		get_time_ms(void);
 long long		get_time_interval(long long start, long long end);
 long long		get_timestamp(t_philosopher *phil);
+int				update_desk_status(t_desk *desk, int status);
 
 /***********************/
 /*****    ft_*.c   *****/
@@ -129,4 +131,5 @@ int				eating(t_desk *desk, int phil_idx);
 int				thinking(t_desk *desk, int phil_idx);
 int				sleeping(t_desk *desk, int phil_idx);
 int				check_die(t_desk *desk, int phil_idx);
+int				check_full(t_desk *desk, int phil_idx);
 #endif

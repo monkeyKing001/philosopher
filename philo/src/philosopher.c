@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/29 12:59:11 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/29 21:41:44 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -72,20 +72,27 @@ int	philosophers_action_2(t_desk *desk, int phil_idx)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	while (desk -> finished == FALSE)
+	//check finished or full
+	while (desk -> finished == FALSE && \
+			phil -> status != FINISHED)
 	{
-		if (desk -> finished == FALSE && \
-				eating(desk, phil_idx) == FAIL && \
-				phil -> status != FINISHED)
-			desk -> finished = TRUE;
-		if (desk -> finished == FALSE && \
-				sleeping(desk, phil_idx) == FAIL && \
-				phil -> status != FINISHED)
-			desk -> finished = TRUE;
-		if (desk -> finished == FALSE \
-				&& thinking(desk, phil_idx) == FAIL \
-				&& phil -> status != FINISHED)
-			desk -> finished = TRUE;
+		eating(desk, phil_idx);
+		sleeping(desk, phil_idx);
+		thinking(desk, phil_idx);
 	}
 	return (1);
 }
+//		if (desk -> finished == FALSE && \
+//				eating(desk, phil_idx) == FAIL && \
+//				phil -> status != FINISHED && \
+//				check_phil_full(desk, phil_idx))
+//			desk -> finished = TRUE;
+//		if (desk -> finished == FALSE && \
+//				sleeping(desk, phil_idx) == FAIL && \
+//				phil -> status != FINISHED && \
+//				check_phil_full(desk, phil_idx))
+//			desk -> finished = TRUE;
+//		if (desk -> finished == FALSE \
+//				&& thinking(desk, phil_idx) == FAIL \
+//				&& phil -> status != FINISHED)
+//			desk -> finished = TRUE;
