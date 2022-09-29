@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/26 15:18:00 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/29 12:59:11 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -69,13 +69,22 @@ void	*philosophers_action(void *v_desk)
 
 int	philosophers_action_2(t_desk *desk, int phil_idx)
 {
+	t_philosopher	*phil;
+
+	phil = &(desk -> phils[phil_idx]);
 	while (desk -> finished == FALSE)
 	{
-		if (desk -> finished == FALSE && eating(desk, phil_idx) == FAIL) 
+		if (desk -> finished == FALSE && \
+				eating(desk, phil_idx) == FAIL && \
+				phil -> status != FINISHED)
 			desk -> finished = TRUE;
-		if (desk -> finished == FALSE && sleeping(desk, phil_idx) == FAIL) 
+		if (desk -> finished == FALSE && \
+				sleeping(desk, phil_idx) == FAIL && \
+				phil -> status != FINISHED)
 			desk -> finished = TRUE;
-		if  (desk -> finished == FALSE && thinking(desk, phil_idx) == FAIL) 
+		if (desk -> finished == FALSE \
+				&& thinking(desk, phil_idx) == FAIL \
+				&& phil -> status != FINISHED)
 			desk -> finished = TRUE;
 	}
 	return (1);

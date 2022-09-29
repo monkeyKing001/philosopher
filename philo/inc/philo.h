@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/26 14:31:12 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/29 12:55:40 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define SLEEPING 0
 # define THINKING 1
 # define EATING 2
-# define DIE 4
+# define FINISHED 4
 
 /***********************/
 /******  BOOLEAN  ******/
@@ -128,5 +128,5 @@ int				philosophers_action_2(t_desk *desk, int phil_idx);
 int				eating(t_desk *desk, int phil_idx);
 int				thinking(t_desk *desk, int phil_idx);
 int				sleeping(t_desk *desk, int phil_idx);
-int 			check_die(t_desk *desk, int phil_idx);
+int				check_die(t_desk *desk, int phil_idx);
 #endif
