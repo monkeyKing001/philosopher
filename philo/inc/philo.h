@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/29 21:24:05 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:21:45 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define TRUE 1
 # define FAIL 0
 # define SUCCESS 1
+# define CHECK 0
+# define UPDATE 1
 
 /***********************/
 /******  COLORS   ******/
@@ -67,6 +69,7 @@ typedef struct s_philosopher
 	int					max_eat_num;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		desk_die_mutex;
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;
@@ -80,7 +83,8 @@ typedef struct s_desk
 {
 	t_philosopher		*phils;
 	pthread_mutex_t		*forks;
-	pthread_mutex_t		*info_mutex;
+	pthread_mutex_t		info_mutex;
+	pthread_mutex_t		desk_die_mutex;
 	int					phils_num;
 	int					phils_idx;
 	long long			time_to_die;
@@ -117,9 +121,10 @@ size_t			ft_strlen(char *str);
 /**   philosopher.c  ***/
 /***********************/
 void			hello_philosophers(t_desk *desk);
-void			bye_philosophers(t_desk *desk);
+void			bye_philosophers(t_desk *desk, pthread_t *threads);
 void			*philosophers_action(void *_NULLABLE);
 int				philosophers_action_2(t_desk *desk, int phil_idx);
+int				check_die_desk(t_desk *desk, int option);
 
 /***********************/
 /*****   action.c  *****/

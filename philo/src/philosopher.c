@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/29 21:41:44 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/30 18:35:29 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -38,21 +38,17 @@ void	hello_philosophers(t_desk *desk)
 	threads = malloc(sizeof(pthread_t) * desk -> phils_num);
 	offset = desk -> phils_num + (desk -> phils_num % 2 == 0);
 	i = 1;
-	while (i < (desk -> phils_num * 2) + 1)
+	while (pthread_mutex_lock(&(desk-> info_mutex)) == 0 \
+			&& i < (desk -> phils_num * 2) + 1)
 	{
-		pthread_mutex_lock(desk -> info_mutex);
+		//write
 		desk -> phils_idx = i % offset;
 		desk -> phils[i % offset].phils_id = i % offset;
 		pthread_create(&threads[i % offset], NULL, \
 				philosophers_action, (void *)(desk));
 		i += 2;
 	}
-	i = 1;
-	while (i < (desk -> phils_num * 2) - 1)
-	{
-		pthread_join(threads[i % offset], NULL);
-		i += 2;
-	}
+	bye_philosophers(desk, threads);
 }
 
 void	*philosophers_action(void *v_desk)
@@ -61,8 +57,9 @@ void	*philosophers_action(void *v_desk)
 	int				phil_idx;
 
 	desk = v_desk;
+	// read
 	phil_idx = desk -> phils_idx;
-	pthread_mutex_unlock(desk -> info_mutex);
+	pthread_mutex_unlock(&(desk -> info_mutex));
 	philosophers_action_2(desk, phil_idx);
 	return (NULL);
 }
@@ -72,9 +69,9 @@ int	philosophers_action_2(t_desk *desk, int phil_idx)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	//check finished or full
-	while (desk -> finished == FALSE && \
-			phil -> status != FINISHED)
+	pthread_mutex_init(&(phil -> desk_die_mutex), NULL);
+	while (check_die_desk(desk, CHECK) == FALSE && \
+			check_full(desk, phil_idx) == FALSE)
 	{
 		eating(desk, phil_idx);
 		sleeping(desk, phil_idx);
@@ -82,17 +79,37 @@ int	philosophers_action_2(t_desk *desk, int phil_idx)
 	}
 	return (1);
 }
-//		if (desk -> finished == FALSE && \
-//				eating(desk, phil_idx) == FAIL && \
-//				phil -> status != FINISHED && \
-//				check_phil_full(desk, phil_idx))
-//			desk -> finished = TRUE;
-//		if (desk -> finished == FALSE && \
-//				sleeping(desk, phil_idx) == FAIL && \
-//				phil -> status != FINISHED && \
-//				check_phil_full(desk, phil_idx))
-//			desk -> finished = TRUE;
-//		if (desk -> finished == FALSE \
-//				&& thinking(desk, phil_idx) == FAIL \
-//				&& phil -> status != FINISHED)
-//			desk -> finished = TRUE;
+
+int	check_die_desk(t_desk *desk, int option)
+{
+	pthread_mutex_lock(&(desk -> desk_die_mutex));
+	if (option == CHECK)
+	{
+		usleep(500);
+		if (desk -> finished == TRUE)
+		{
+			pthread_mutex_unlock(&(desk -> desk_die_mutex));
+			return (1);
+		}
+		pthread_mutex_unlock(&(desk -> desk_die_mutex));
+		return (0);
+	}
+	else if (option == UPDATE)
+		desk -> finished = TRUE;
+	pthread_mutex_unlock(&(desk -> desk_die_mutex));
+	return (1);
+}
+
+void	bye_philosophers(t_desk *desk, pthread_t *threads)
+{
+	int				i;
+	int				offset;
+
+	offset = desk -> phils_num + (desk -> phils_num % 2 == 0);
+	i = 1;
+	while (i < (desk -> phils_num * 2) + 1)
+	{
+		pthread_join(threads[i % offset], NULL);
+		i += 2;
+	}
+}

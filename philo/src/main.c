@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:09:14 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/29 22:11:13 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/30 15:55:30 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -51,13 +51,13 @@ t_desk	*init_desk(int argc, const char **argv)
 		desk -> number_of_must_eat = ft_atoi(argv[5]);
 	desk -> finished = FALSE;
 	desk -> forks = malloc(sizeof(pthread_mutex_t) * desk -> phils_num);
-	desk -> info_mutex = malloc(sizeof(pthread_mutex_t));
-	if (!desk -> forks || ! desk -> info_mutex)
+	if (!desk -> forks)
 		return (NULL);
 	i = 0;
 	while (i < desk -> phils_num)
 		pthread_mutex_init(&desk -> forks[i++], NULL);
-	pthread_mutex_init(desk -> info_mutex, NULL);
+	pthread_mutex_init(&(desk -> info_mutex), NULL);
+	pthread_mutex_init(&(desk -> desk_die_mutex), NULL);
 	return (desk);
 }
 
@@ -85,7 +85,6 @@ t_philosopher	*init_phils(t_desk *desk)
 		phils[i].time_to_sleep = desk -> time_to_sleep;
 		phils[i].num_eat = 0;
 		phils[i].max_eat_num = desk -> number_of_must_eat;
-		printf("max eat num %d\n", phils[i].max_eat_num);
 		phils[i++].last_time = birth_ms;
 	}
 	return (phils);
