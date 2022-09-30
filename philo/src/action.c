@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 19:09:31 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/29 22:12:59 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/09/30 12:37:25 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -16,11 +16,8 @@ int	eating(t_desk *desk, int phil_idx)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	//check die phil, full
-	if (check_die(desk, phil_idx) == TRUE && check_full(desk, phil_idx) == TRUE)
+	if (check_die(desk, phil_idx) == TRUE || check_full(desk, phil_idx) == TRUE)
 		return (0);
-	//phil alive
-	//check other phil has died
 	if (desk -> finished == FALSE)
 	{
 		pthread_mutex_lock(phil -> left_fork);
@@ -39,7 +36,6 @@ int	eating(t_desk *desk, int phil_idx)
 		pthread_mutex_unlock(phil -> left_fork);
 		pthread_mutex_unlock(phil -> right_fork);
 		phil -> num_eat++;
-		printf("%d's eat num : %d\n", phil_idx + 1, phil -> num_eat);
 	}
 	return (1);
 }
@@ -108,10 +104,8 @@ int	check_full(t_desk *desk, int phil_idx)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	//full
-	if (phil -> max_eat_num <= phil -> num_eat)
+	if (phil -> max_eat_num == phil -> num_eat)
 	{
-		printf("### FULL ####\n");
 		phil -> status = FINISHED;
 		return (1);
 	}
