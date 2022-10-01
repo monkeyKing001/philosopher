@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:09:14 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/30 15:55:30 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/01 22:55:48 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -64,28 +64,28 @@ t_desk	*init_desk(int argc, const char **argv)
 t_philosopher	*init_phils(t_desk *desk)
 {
 	t_philosopher		*phils;
+	long long			birth_ms;
 	int					phils_num;
 	int					i;
-	long long			birth_ms;
 
 	phils_num = desk -> phils_num;
+	birth_ms = get_time_ms();
 	phils = malloc(sizeof(t_philosopher) * phils_num);
 	if (!phils)
 		return (NULL);
-	birth_ms = get_time_ms();
 	i = 0;
 	while (i < phils_num)
 	{
-		phils[i].birth_ms = birth_ms;
+		phils[i].desk = desk;
 		phils[i].left_fork = &desk -> forks[i % phils_num];
 		phils[i].right_fork = &desk -> forks[(i + 1) % phils_num];
-		phils[i].status = THINKING;
 		phils[i].time_to_die = desk -> time_to_die;
 		phils[i].time_to_eat = desk -> time_to_eat;
 		phils[i].time_to_sleep = desk -> time_to_sleep;
 		phils[i].num_eat = 0;
-		phils[i].max_eat_num = desk -> number_of_must_eat;
-		phils[i++].last_time = birth_ms;
+		phils[i].birth_ms = birth_ms;
+		phils[i].last_time = phils[i].birth_ms;
+		phils[i++].max_eat_num = desk -> number_of_must_eat;
 	}
 	return (phils);
 }

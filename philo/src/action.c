@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 19:09:31 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/30 16:46:58 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/01 22:17:36 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -18,26 +18,20 @@ int	eating(t_desk *desk, int phil_idx)
 	phil = &(desk -> phils[phil_idx]);
 	if (check_die(desk, phil_idx) == TRUE || check_full(desk, phil_idx) == TRUE)
 		return (0);
-	pthread_mutex_lock(phil -> left_fork);
-	pthread_mutex_lock(phil -> right_fork);
-	if (check_die_desk(desk, CHECK) == FALSE)
+	if (pthread_mutex_lock(phil -> left_fork) == 0)
+		print_state(desk, phil_idx, FORK);
+	if (pthread_mutex_lock(phil -> right_fork) == 0)
+		print_state(desk, phil_idx, FORK);
+	if (check_die_desk(desk, phil_idx, CHECK) == FALSE)
 	{
-		printf("%lld %d has taken a fork\n", get_timestamp(phil), phil_idx + 1);
-		printf("%lld %d has taken a fork\n", get_timestamp(phil), phil_idx + 1);
-		printf("%lld %d is eating\n", get_timestamp(phil), phil_idx + 1);
-		phil -> last_time = get_time_ms();
-		usleep((int)phil -> time_to_eat * 1000);
-		pthread_mutex_unlock(phil -> left_fork);
-		pthread_mutex_unlock(phil -> right_fork);
+		print_state(desk, phil_idx, EATING);
 		phil -> num_eat++;
-		return (1);
+		phil -> last_time = get_time_ms();
+		time_passing(phil -> time_to_eat);
 	}
-	else
-	{
-		pthread_mutex_unlock(phil -> left_fork);
-		pthread_mutex_unlock(phil -> right_fork);
-		return (0);
-	}
+	pthread_mutex_unlock(phil -> left_fork);
+	pthread_mutex_unlock(phil -> right_fork);
+	return (1);
 }
 
 int	thinking(t_desk *desk, int phil_idx)
@@ -45,33 +39,22 @@ int	thinking(t_desk *desk, int phil_idx)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	if (check_die_desk(desk, CHECK) == FALSE)
-	{
-		printf("%lld %d is thinking\n", get_timestamp(phil), phil_idx + 1);
-		return (1);
-	}
+	print_state(desk, phil_idx, THINKING);
 	return (0);
 }
 
 int	sleeping(t_desk *desk, int phil_idx)
 {
 	t_philosopher	*phil;
-	long long		time_10_ms;
+	long long		sleep_time;
 
 	phil = &(desk -> phils[phil_idx]);
-	if (check_die_desk(desk, CHECK) == FALSE)
-	{
-		time_10_ms = 0;
-		printf("%lld %d is sleeping\n", get_timestamp(phil), phil_idx + 1);
-		while (check_die(desk, phil_idx) == FALSE && \
-				time_10_ms < phil -> time_to_sleep)
-		{
-			if (check_die(desk, phil_idx) == TRUE)
-				return (0);
-			usleep(10 * 1000);
-			time_10_ms += 10;
-		}
-	}
+	sleep_time = phil -> time_to_sleep;
+	if (phil -> time_to_die < sleep_time)
+		sleep_time = phil -> time_to_die;
+	print_state(desk, phil_idx, SLEEPING);
+	time_passing(sleep_time);
+	check_die(desk, phil_idx);
 	return (1);
 }
 
@@ -80,19 +63,15 @@ int	check_die(t_desk *desk, int phil_idx)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	if (check_die_desk(desk, CHECK) == FALSE \
+	if (check_die_desk(desk, phil_idx, CHECK) == FALSE \
 			&& phil -> time_to_die \
 			< get_time_interval(phil -> last_time, get_time_ms()))
 	{
-		check_die_desk(desk, UPDATE);
 		phil -> status = FINISHED;
-		usleep(500);
-		printf("%lld %d died\n", \
-				get_time_interval(phil -> birth_ms, \
-				get_time_ms()), phil_idx + 1);
+		print_state(desk, phil_idx, DIED);
+		check_die_desk(desk, phil_idx, UPDATE);
 		return (1);
 	}
-	pthread_mutex_unlock(&(phil -> desk_die_mutex));
 	return (0);
 }
 

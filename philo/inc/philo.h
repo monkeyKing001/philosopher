@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/09/30 18:21:45 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/01 22:57:10 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 /***********************/
 # define SLEEPING 0
 # define THINKING 1
-# define EATING 2
+# define FORK 2
+# define EATING 3
 # define FINISHED 4
+# define DIED 4
 
 /***********************/
 /******  BOOLEAN  ******/
@@ -108,7 +110,8 @@ void			report_status(int phil, int status);
 long long		get_time_ms(void);
 long long		get_time_interval(long long start, long long end);
 long long		get_timestamp(t_philosopher *phil);
-int				update_desk_status(t_desk *desk, int status);
+void			time_passing(long long time);
+void			print_state(t_desk *desk, int phil_idx, int STATUS);
 
 /***********************/
 /*****    ft_*.c   *****/
@@ -124,7 +127,7 @@ void			hello_philosophers(t_desk *desk);
 void			bye_philosophers(t_desk *desk, pthread_t *threads);
 void			*philosophers_action(void *_NULLABLE);
 int				philosophers_action_2(t_desk *desk, int phil_idx);
-int				check_die_desk(t_desk *desk, int option);
+int				check_die_desk(t_desk *desk, int phil_idx, int option);
 
 /***********************/
 /*****   action.c  *****/
