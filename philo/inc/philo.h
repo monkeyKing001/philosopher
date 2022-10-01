@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/01 22:57:10 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/02 02:21:06 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_philosopher
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;
+	struct s_desk		*desk;
 }	t_philosopher;
 
 /*

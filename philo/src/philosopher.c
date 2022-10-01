@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/01 22:48:21 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/02 02:43:31 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -33,38 +33,37 @@ void	hello_philosophers(t_desk *desk)
 {
 	int				i;
 	int				offset;
+	int				phil_idx;
 	pthread_t		*threads;
 
 	offset = desk -> phils_num + (desk -> phils_num % 2 == 0);
 	threads = malloc(sizeof(pthread_t) * desk -> phils_num);
 	i = 1;
-	desk -> phils_idx = 1;
 	while (i < (desk -> phils_num * 2) + 1)
 	{
-		pthread_create(&threads[i % offset], NULL, \
-				philosophers_action, (void *)(desk));
+		phil_idx = i % offset;
+		desk -> phils[phil_idx].phils_id = phil_idx;
+		pthread_create(&threads[phil_idx], NULL, \
+				philosophers_action, &(desk -> phils[phil_idx]));
 		i += 2;
 	}
 	bye_philosophers(desk, threads);
 }
 
-void	*philosophers_action(void *v_desk)
+void	*philosophers_action(void *_NULLABLE)
 {
 	t_desk			*desk;
+	t_philosopher	*phil;
 	int				phil_idx;
-	int				offset;
 
-	desk = v_desk;
-	offset = desk -> phils_num + (desk -> phils_num % 2 == 0);
-	pthread_mutex_lock(&(desk-> info_mutex));
-	phil_idx = desk -> phils_idx % offset;
-	desk -> phils_idx += 2;
-	pthread_mutex_unlock(&(desk -> info_mutex));
-	desk -> phils[phil_idx].phils_id = phil_idx;
+	phil = (t_philosopher *)_NULLABLE;
+	desk = phil -> desk;
+	phil_idx = phil -> phils_id;
 	philosophers_action_2(desk, phil_idx);
 	return (NULL);
 }
 
+//	printf("%lld %d start!\n", get_timestamp(phil), phil_idx + 1);
 int	philosophers_action_2(t_desk *desk, int phil_idx)
 {
 	t_philosopher	*phil;

@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/10/01 22:50:36 by dokwak           ###   ########.fr        #
+#    Updated: 2022/10/02 02:44:49 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,7 +105,7 @@ create_dirs:
  # argv[4] = time_to_sleep 
  # argv[5] = [number_of_times_each_philosopher_must_eat] <- an optional arg
 run: all
-	@$(LEAKS)./$(NAME) 198 510 200 200 5 > output.txt
+	@$(LEAKS)./$(NAME) 198 5000 200 200 5 > output.txt
 
 clean:
 	@$(PRINTF) "$(CYAN)Cleaning up object files in $(OBJ_DIR)...$(DEFAULT)\n"
