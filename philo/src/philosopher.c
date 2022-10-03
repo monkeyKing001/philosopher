@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/02 02:43:31 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/03 14:59:53 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -43,6 +43,8 @@ void	hello_philosophers(t_desk *desk)
 	{
 		phil_idx = i % offset;
 		desk -> phils[phil_idx].phils_id = phil_idx;
+		if (phil_idx == 0)
+			usleep(1000);
 		pthread_create(&threads[phil_idx], NULL, \
 				philosophers_action, &(desk -> phils[phil_idx]));
 		i += 2;

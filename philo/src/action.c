@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 19:09:31 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/01 22:17:36 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/03 14:52:59 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -14,6 +14,7 @@
 int	eating(t_desk *desk, int phil_idx)
 {
 	t_philosopher	*phil;
+	long long		start_eating_time;
 
 	phil = &(desk -> phils[phil_idx]);
 	if (check_die(desk, phil_idx) == TRUE || check_full(desk, phil_idx) == TRUE)
@@ -22,11 +23,12 @@ int	eating(t_desk *desk, int phil_idx)
 		print_state(desk, phil_idx, FORK);
 	if (pthread_mutex_lock(phil -> right_fork) == 0)
 		print_state(desk, phil_idx, FORK);
+	start_eating_time = get_time_ms();
 	if (check_die_desk(desk, phil_idx, CHECK) == FALSE)
 	{
 		print_state(desk, phil_idx, EATING);
 		phil -> num_eat++;
-		phil -> last_time = get_time_ms();
+		phil -> last_time = start_eating_time;
 		time_passing(phil -> time_to_eat);
 	}
 	pthread_mutex_unlock(phil -> left_fork);
