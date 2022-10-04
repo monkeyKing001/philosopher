@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:58:43 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/04 15:33:36 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 19:43:06 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,20 @@ void	print_state(t_desk *desk, int phil_idx, int STATUS)
 	phil = &(desk -> phils[phil_idx]);
 	pthread_mutex_lock(&(desk -> print_mutex));
 	if (STATUS == DIED \
-			&& check_die_desk(desk, phil_idx, CHECK) == FALSE)
+			&& desk -> finished == FALSE)
 	{
 		check_die_desk(desk, phil_idx, UPDATE);
 		printf("%lld %d died\n", get_timestamp(phil), phil_idx + 1);
 	}
 	else if (STATUS == SLEEPING \
-			&& check_die_desk(desk, phil_idx, CHECK) == FALSE)
+			&& desk -> finished == FALSE)
 		printf("%lld %d is sleeping\n", get_timestamp(phil), phil_idx + 1);
 	else if (STATUS == THINKING \
-			&& check_die_desk(desk, phil_idx, CHECK) == FALSE)
+			&& desk -> finished == FALSE)
 		printf("%lld %d is thinking\n", get_timestamp(phil), phil_idx + 1);
-	else if (STATUS == FORK && check_die_desk(desk, phil_idx, CHECK) == FALSE)
+	else if (STATUS == FORK && desk -> finished == FALSE)
 		printf("%lld %d has taken a fork\n", get_timestamp(phil), phil_idx + 1);
-	else if (STATUS == EATING && check_die_desk(desk, phil_idx, CHECK) == FALSE)
+	else if (STATUS == EATING && desk -> finished == FALSE)
 		printf("%lld %d is eating\n", get_timestamp(phil), phil_idx + 1);
 	pthread_mutex_unlock(&(desk -> print_mutex));
 }
