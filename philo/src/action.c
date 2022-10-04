@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 19:09:31 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/04 17:10:55 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 21:47:43 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -26,8 +26,8 @@ int	eating(t_desk *desk, int phil_idx)
 	{
 		print_state(desk, phil_idx, EATING);
 		phil -> num_eat++;
-		time_passing(phil -> time_to_eat);
 		phil -> last_time = get_time_ms();
+		time_passing(phil -> time_to_eat);
 	}
 	pthread_mutex_unlock(phil -> left_fork);
 	pthread_mutex_unlock(phil -> right_fork);

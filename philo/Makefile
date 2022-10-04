@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/10/04 19:45:31 by dokwak           ###   ########.fr        #
+#    Updated: 2022/10/04 22:04:39 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,19 +42,18 @@ UNAME = $(shell uname -s)
 AR = ar rcs
 
 # thread
-CFLAGS = -Wall -Wextra -Werror -MD -O3 -g3 -fsanitize=thread 
+# CFLAGS = -Wall -Wextra -Werror -O3 -g3 -fsanitize=thread 
 
 # address
-# CFLAGS = -Wall -Wextra -Werror -MD -O3 -fsanitize=address 
+# CFLAGS = -Wall -Wextra -Werror -O3 -fsanitize=address 
 
-# CFLAGS = -Wall -Wextra -Werror -MD -g3 -O3
+CFLAGS = -Wall -Wextra -Werror -g3 -O3
 RM = rm -f
 CC = gcc
 PRINTF = LC_NUMERIC="en_US.UTF-8" printf
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = ./
-#LIBFT = libft/libft.a
 BIN = philo
 NAME = $(BIN_DIR)/$(BIN)
 
@@ -105,7 +104,7 @@ create_dirs:
  # argv[4] = time_to_sleep 
  # argv[5] = [number_of_times_each_philosopher_must_eat] <- an optional arg
 run: all
-	@$(LEAKS)./$(NAME) 200 500 200 200 5
+	@$(LEAKS)./$(NAME) 200 600 200 200
 
 clean:
 	@$(PRINTF) "$(CYAN)Cleaning up object files in $(OBJ_DIR)...$(DEFAULT)\n"

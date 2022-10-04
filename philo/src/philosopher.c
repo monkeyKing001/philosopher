@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/04 16:25:52 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 23:00:56 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -38,13 +38,18 @@ void	hello_philosophers(t_desk *desk)
 
 	offset = desk -> phils_num + (desk -> phils_num % 2 == 0);
 	threads = malloc(sizeof(pthread_t) * desk -> phils_num);
+	if (desk -> phils_num == 1)
+	{
+		single_phil_case(desk);
+		return ;
+	}
 	i = 1;
 	while (i < (desk -> phils_num * 2) + 1)
 	{
 		phil_idx = i % offset;
 		desk -> phils[phil_idx].phils_id = phil_idx;
 		if (phil_idx == 0)
-			usleep(1000);
+			usleep(500);
 		pthread_create(&threads[phil_idx], NULL, \
 				philosophers_action, &(desk -> phils[phil_idx]));
 		i += 2;

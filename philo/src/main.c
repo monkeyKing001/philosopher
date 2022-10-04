@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:09:14 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/04 16:29:24 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 23:01:00 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 {
 	t_desk	*desk;
 
-	if (argc != 5 && argc != 6)
+	if (error_arg_check(argc, argv) == FAIL)
 		return (0);
 	desk = init_desk(argc, (const char **)argv);
 	if (!desk)
@@ -89,4 +89,46 @@ t_philosopher	*init_phils(t_desk *desk)
 		phils[i++].max_eat_num = desk -> number_of_must_eat;
 	}
 	return (phils);
+}
+
+int	error_arg_check(int argc, char **argv)
+{
+	int	i;
+	int	argv_idx;
+
+	if (argc != 5 && argc != 6)
+	{
+		printf("Error : unvalid argument count\n");
+		return (0);
+	}
+	argv_idx = 1;
+	i = 0;
+	while (argv_idx < argc)
+	{
+		i = 0;
+		while (argv[argv_idx][i])
+		{
+			if (!ft_isdigit((const char)argv[argv_idx][i]))
+			{
+				printf("Error : unvalid argument value");
+				return (0);
+			}
+			i++;
+		}
+		argv_idx++;
+	}
+	return (1);
+}
+
+int	single_phil_case(t_desk *desk)
+{
+	print_state(desk, 0, FORK);
+	time_passing(desk -> time_to_die);
+	print_state(desk, 0, DIED);
+	pthread_mutex_destroy(&desk -> forks[0]);
+	free(desk -> phils);
+	pthread_mutex_destroy(&desk -> desk_die_mutex);
+	pthread_mutex_destroy(&desk -> info_mutex);
+	pthread_mutex_destroy(&desk -> print_mutex);
+	return (1);
 }

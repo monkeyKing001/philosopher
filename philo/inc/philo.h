@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/04 16:17:47 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 22:41:15 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,8 @@ typedef struct s_desk
 t_desk			*init_desk(int argc, const char **argv);
 t_philosopher	*init_phils(t_desk *desk);
 int				init_argv(t_desk *desk, int arc, const char **argv);
-void			report_status(int phil, int status);
+int				error_arg_check(int argc, char **argv);
+int				single_phil_case(t_desk *desk);
 
 /***********************/
 /*****   utils.c   *****/
@@ -120,6 +121,7 @@ void			print_state(t_desk *desk, int phil_idx, int STATUS);
 int				ft_atoi(const char *s);
 size_t			ft_strlcat(char *dest, const char *src, size_t dstsize);
 size_t			ft_strlen(char *str);
+int				ft_isdigit(const char s);
 
 /***********************/
 /**   philosopher.c  ***/
@@ -133,9 +135,6 @@ int				check_die_desk(t_desk *desk, int phil_idx, int option);
 /***********************/
 /*****   action.c  *****/
 /***********************/
-//int				eating(t_philosopher *phil);
-//int				thinking(t_philosopher *phil);
-//int				sleeping(t_philosopher *phil);
 int				eating(t_desk *desk, int phil_idx);
 int				thinking(t_desk *desk, int phil_idx);
 int				sleeping(t_desk *desk, int phil_idx);
