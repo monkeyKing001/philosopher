@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/02 02:21:06 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 16:17:47 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_philosopher
 	int					max_eat_num;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
-	pthread_mutex_t		desk_die_mutex;
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;
@@ -88,6 +87,7 @@ typedef struct s_desk
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		info_mutex;
 	pthread_mutex_t		desk_die_mutex;
+	pthread_mutex_t		print_mutex;
 	int					phils_num;
 	int					phils_idx;
 	long long			time_to_die;

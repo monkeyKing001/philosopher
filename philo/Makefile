@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/10/03 14:38:32 by dokwak           ###   ########.fr        #
+#    Updated: 2022/10/04 16:29:33 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,9 @@ AR = ar rcs
 # CFLAGS = -Wall -Wextra -Werror -MD -g3 -fsanitize=thread 
 
 # address
-CFLAGS = -Wall -Wextra -Werror -MD -g3 -fsanitize=address 
+# CFLAGS = -Wall -Wextra -Werror -MD -O3 -fsanitize=address 
 
-# CFLAGS = -Wall -Wextra -Werror -MD -g3
+CFLAGS = -Wall -Wextra -Werror -MD -g3
 RM = rm -f
 CC = gcc
 PRINTF = LC_NUMERIC="en_US.UTF-8" printf

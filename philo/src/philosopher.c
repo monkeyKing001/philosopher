@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:21:47 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/03 14:59:53 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 16:25:52 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -71,7 +71,6 @@ int	philosophers_action_2(t_desk *desk, int phil_idx)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	pthread_mutex_init(&(phil -> desk_die_mutex), NULL);
 	while (check_die_desk(desk, phil_idx, CHECK) == FALSE && \
 			check_full(desk, phil_idx) == FALSE)
 	{
@@ -87,9 +86,14 @@ int	check_die_desk(t_desk *desk, int phil_idx, int option)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
-	pthread_mutex_lock(&(desk -> desk_die_mutex));
-	if (option == CHECK)
+	if (option == UPDATE)
 	{
+		pthread_mutex_lock(&(desk -> desk_die_mutex));
+		desk -> finished = TRUE;
+	}
+	else if (option == CHECK)
+	{
+		pthread_mutex_lock(&(desk -> desk_die_mutex));
 		if (desk -> finished == TRUE)
 		{
 			pthread_mutex_unlock(&(desk -> desk_die_mutex));
@@ -98,8 +102,6 @@ int	check_die_desk(t_desk *desk, int phil_idx, int option)
 		pthread_mutex_unlock(&(desk -> desk_die_mutex));
 		return (0);
 	}
-	else if (option == UPDATE)
-		desk -> finished = TRUE;
 	pthread_mutex_unlock(&(desk -> desk_die_mutex));
 	return (1);
 }
@@ -116,4 +118,15 @@ void	bye_philosophers(t_desk *desk, pthread_t *threads)
 		pthread_join(threads[i % offset], NULL);
 		i += 2;
 	}
+	i = 1;
+	while (i < (desk -> phils_num * 2) + 1)
+	{
+		pthread_mutex_destroy(&desk -> forks[i % offset]);
+		i += 2;
+	}
+	free(desk -> phils);
+	pthread_mutex_destroy(&desk -> desk_die_mutex);
+	pthread_mutex_destroy(&desk -> info_mutex);
+	pthread_mutex_destroy(&desk -> print_mutex);
+	free(desk);
 }

@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:58:43 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/03 15:31:18 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 15:33:36 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	time_passing(long long time)
 
 	end_time = time + get_time_ms();
 	while (end_time > get_time_ms())
-		usleep(10);
+		usleep(100);
 }
 
 void	print_state(t_desk *desk, int phil_idx, int STATUS)
@@ -49,11 +49,13 @@ void	print_state(t_desk *desk, int phil_idx, int STATUS)
 	t_philosopher	*phil;
 
 	phil = &(desk -> phils[phil_idx]);
+	pthread_mutex_lock(&(desk -> print_mutex));
 	if (STATUS == DIED \
 			&& check_die_desk(desk, phil_idx, CHECK) == FALSE)
-		printf("%lld %d died\n", \
-				get_time_interval(phil -> birth_ms, \
-				get_time_ms()), phil_idx + 1);
+	{
+		check_die_desk(desk, phil_idx, UPDATE);
+		printf("%lld %d died\n", get_timestamp(phil), phil_idx + 1);
+	}
 	else if (STATUS == SLEEPING \
 			&& check_die_desk(desk, phil_idx, CHECK) == FALSE)
 		printf("%lld %d is sleeping\n", get_timestamp(phil), phil_idx + 1);
@@ -64,4 +66,5 @@ void	print_state(t_desk *desk, int phil_idx, int STATUS)
 		printf("%lld %d has taken a fork\n", get_timestamp(phil), phil_idx + 1);
 	else if (STATUS == EATING && check_die_desk(desk, phil_idx, CHECK) == FALSE)
 		printf("%lld %d is eating\n", get_timestamp(phil), phil_idx + 1);
+	pthread_mutex_unlock(&(desk -> print_mutex));
 }

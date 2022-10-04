@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:09:14 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/02 02:21:35 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/04 16:29:24 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
@@ -58,6 +58,7 @@ t_desk	*init_desk(int argc, const char **argv)
 		pthread_mutex_init(&desk -> forks[i++], NULL);
 	pthread_mutex_init(&(desk -> info_mutex), NULL);
 	pthread_mutex_init(&(desk -> desk_die_mutex), NULL);
+	pthread_mutex_init(&(desk -> print_mutex), NULL);
 	return (desk);
 }
 
