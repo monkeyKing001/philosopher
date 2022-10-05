@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/05 20:26:01 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/05 20:27:31 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ void			print_state(t_desk *desk, int phil_idx, int STATUS);
 /*****    ft_*.c   *****/
 /***********************/
 int				ft_atoi(const char *s);
-size_t			ft_strlcat(char *dest, const char *src, size_t dstsize);
-size_t			ft_strlen(char *str);
 int				ft_isdigit(const char s);
 
 /***********************/
