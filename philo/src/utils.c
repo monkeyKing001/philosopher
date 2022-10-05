@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:58:43 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/04 19:43:06 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/05 19:42:32 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,9 @@ void	print_state(t_desk *desk, int phil_idx, int STATUS)
 		printf("%lld %d is eating\n", get_timestamp(phil), phil_idx + 1);
 	pthread_mutex_unlock(&(desk -> print_mutex));
 }
+/*
+//		printf("%lld is %d's last_time\n", \
+//				get_timestamp(phil), phil_idx + 1);
+//		printf("%lld is %d's death time\n", \
+//				get_timestamp(phil) + phil -> time_to_die, phil_idx + 1);
+//				*/

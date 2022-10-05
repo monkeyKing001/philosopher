@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/10/04 22:04:39 by dokwak           ###   ########.fr        #
+#    Updated: 2022/10/05 18:53:49 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,21 +24,6 @@ WHITE = \033[0;97m
 SHELL=/bin/bash
 UNAME = $(shell uname -s)
 
-# Linux Valgrind
-##ifeq ($(UNAME), Linux)
-##	LEAKS = valgrind --leak-check=full --track-fds=yes --trace-children=yes -s -q 
-##endif
-
-# Mac Valgrind 
-#ifeq ($(UNAME), Darwin)
-#	LEAKS = valgrind --leak-check=full --track-fds=yes --trace-children=yes -s -q 
-#endif
-
-# Mac Valgrind 
-#ifeq ($(UNAME), Darwin)
-#	LEAKS = valgrind --leak-check=full
-#endif
-
 AR = ar rcs
 
 # thread
@@ -48,6 +33,7 @@ AR = ar rcs
 # CFLAGS = -Wall -Wextra -Werror -O3 -fsanitize=address 
 
 CFLAGS = -Wall -Wextra -Werror -g3 -O3
+
 RM = rm -f
 CC = gcc
 PRINTF = LC_NUMERIC="en_US.UTF-8" printf
@@ -57,12 +43,9 @@ BIN_DIR = ./
 BIN = philo
 NAME = $(BIN_DIR)/$(BIN)
 
-SRC = main.c ft_atoi.c utils.c ft_strjoin.c ft_strlcat.c ft_strlen.c philosopher.c action.c
+SRC = main.c ft_atoi.c utils.c philosopher.c action.c
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
-
-# LIBFT
-# OBJ_LFT = $(addprefix $(OBJ_LFT_DIR)/, $(SRC_LFT:.c=.o))
 
 # Progress vars
 SRC_COUNT_TOT := $(shell expr $(shell echo -n $(SRC) | wc -w) - $(shell ls -l $(OBJ_DIR) 2>&1 | grep ".o" | wc -l) + 1)
@@ -104,14 +87,10 @@ create_dirs:
  # argv[4] = time_to_sleep 
  # argv[5] = [number_of_times_each_philosopher_must_eat] <- an optional arg
 run: all
-	@$(LEAKS)./$(NAME) 200 600 200 200
+	@$(LEAKS)./$(NAME) 200 410 200 200
 
 clean:
 	@$(PRINTF) "$(CYAN)Cleaning up object files in $(OBJ_DIR)...$(DEFAULT)\n"
-#	@if [ -d "libft" ]; then \
-#		make clean -C libft/; \
-	fi
-	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
 	@$(RM) $(BIN)
