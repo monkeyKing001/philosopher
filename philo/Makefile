@@ -6,7 +6,7 @@
 #    By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 15:32:26 by dokwak            #+#    #+#              #
-#    Updated: 2022/10/05 20:23:45 by dokwak           ###   ########.fr        #
+#    Updated: 2022/10/05 21:28:51 by dokwak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,12 @@ UNAME = $(shell uname -s)
 AR = ar rcs
 
 # thread
-# CFLAGS = -Wall -Wextra -Werror -O3 -g3 -fsanitize=thread 
+# CFLAGS = -Wall -Wextra -Werror -O3 -fsanitize=thread 
 
 # address
 # CFLAGS = -Wall -Wextra -Werror -O3 -fsanitize=address 
 
-CFLAGS = -Wall -Wextra -Werror -g3 -O3
+CFLAGS = -Wall -Wextra -Werror -O3
 
 RM = rm -f
 CC = gcc
