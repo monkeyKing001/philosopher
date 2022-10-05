@@ -6,11 +6,12 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 19:09:31 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/05 19:44:58 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/05 20:19:59 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../inc/philo.h"
 
+//after picking up fork, check die time
 int	eating(t_desk *desk, int phil_idx)
 {
 	t_philosopher	*phil;
@@ -28,9 +29,9 @@ int	eating(t_desk *desk, int phil_idx)
 	}
 	if (check_die_desk(desk, phil_idx, CHECK) == FALSE)
 	{
-		phil -> last_time = get_time_ms();
 		print_state(desk, phil_idx, EATING);
 		phil -> num_eat++;
+		phil -> last_time = get_time_ms();
 		time_passing(phil -> time_to_eat);
 	}
 	pthread_mutex_unlock(phil -> left_fork);
@@ -68,7 +69,7 @@ int	check_die(t_desk *desk, int phil_idx)
 
 	phil = &(desk -> phils[phil_idx]);
 	if (phil -> time_to_die \
-			<= get_time_interval(phil -> last_time, get_time_ms()))
+			< get_time_interval(phil -> last_time, get_time_ms()))
 	{
 		phil -> status = FINISHED;
 		print_state(desk, phil_idx, DIED);

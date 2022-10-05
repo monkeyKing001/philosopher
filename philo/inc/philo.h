@@ -6,7 +6,7 @@
 /*   By: dokwak <dokwak@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:13:24 by dokwak            #+#    #+#             */
-/*   Updated: 2022/10/04 22:41:15 by dokwak           ###   ########.fr       */
+/*   Updated: 2022/10/05 20:26:01 by dokwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-/*
- * SLEEPING = 0
- * EATING = 1
- * THINKING = 2
- */
 typedef struct s_philosopher
 {
 	int					status;
